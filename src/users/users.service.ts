@@ -15,6 +15,10 @@ export class UsersService {
     return this.usersRepository.findOneBy({ email });
   }
 
+  async findById(userId: string): Promise<User | null> {
+    return this.usersRepository.findOneBy({ id: userId });
+  }
+
   async createUser(email: string, password: string): Promise<User> {
     const existingUser = await this.findByEmail(email);
     if (existingUser) throw new ConflictException('Email already exists');
@@ -24,5 +28,13 @@ export class UsersService {
       password: hashedPassword,
     });
     return this.usersRepository.save(user);
+  }
+
+  async setTwoFASecret(userId: string, secret: string): Promise<void> {
+    await this.usersRepository.update(userId, { twoFASecret: secret });
+  }
+
+  async enableTwoFA(userId: string): Promise<void> {
+    await this.usersRepository.update(userId, { is2FAEnabled: true });
   }
 }

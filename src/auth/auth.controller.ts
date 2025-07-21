@@ -6,9 +6,9 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { User as UserEntity } from 'src/users/entities/user.entity';
+import { User as UserEntity } from '../users/entities/user.entity';
 import { AuthGuard } from '@nestjs/passport';
-import { User } from 'src/common/decorators/user.decorator';
+import { User } from '../common/decorators/user.decorator';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Auth')

@@ -33,6 +33,16 @@ export class AuthController {
     };
   }
 
+  @Post('2fa/generate-terminal')
+  generateTwoFactorTerminal(@Body('email') email: string) {
+    const { otpauthUrl, base32 } = this.authService.generateSecret(email);
+    void this.authService.generateQrCodeTerminal(String(otpauthUrl));
+    return {
+      message: 'QR code impresso no terminal',
+      secret: base32,
+    };
+  }
+
   // 2. Habilitar o 2FA (usuário escaneou o QR e digitou o código TOTP)
   @Post('2fa/enable')
   enableTwoFactorAuth(@Body() body: { code: string; secret: string }) {

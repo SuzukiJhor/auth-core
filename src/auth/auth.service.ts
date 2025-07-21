@@ -48,6 +48,10 @@ export class AuthService {
     return qrcode.toDataURL(otpauthUrl);
   }
 
+  async generateQrCodeTerminal(otpauthUrl: string): Promise<string> {
+    return await qrcode.toString(otpauthUrl, { type: 'terminal', small: true });
+  }
+
   isCodeValid(code: string, secret: string): boolean {
     return speakeasy.totp.verify({
       secret,
